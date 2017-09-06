@@ -52,6 +52,7 @@ import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.NightDisplayTile;
 import com.android.systemui.qs.tiles.ReadingModeTile;
 import com.android.systemui.qs.tiles.PowerShareTile;
+import com.android.systemui.qs.tiles.RebootTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.SyncTile;
 import com.android.systemui.qs.tiles.SoundSearchTile;
@@ -112,6 +113,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<MusicTile> mMusicTileProvider;
     private final Provider<FPSInfoTile> mFPSInfoTileProvider;
     private final Provider<CompassTile> mCompassTileProvider;
+    private final Provider<RebootTile> mRebootTileProvider;
 
     private QSTileHost mHost;
 
@@ -153,6 +155,7 @@ public class QSFactoryImpl implements QSFactory {
             Provider<MusicTile> musicTileProvider,
             Provider<FPSInfoTile> fpsInfoTileProvider,
             Provider<CompassTile> compassTileProvider) {
+            Provider<RebootTile> rebootTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
         mCellularTileProvider = cellularTileProvider;
@@ -190,6 +193,7 @@ public class QSFactoryImpl implements QSFactory {
         mMusicTileProvider = musicTileProvider;
         mFPSInfoTileProvider = fpsInfoTileProvider;
         mCompassTileProvider = compassTileProvider;
+        mRebootTileProvider = rebootTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -280,6 +284,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mFPSInfoTileProvider.get();
             case "compass":
                 return mCompassTileProvider.get();
+            case "reboot":
+                return mRebootTileProvider.get();
         }
 
         // Intent tiles.
