@@ -137,4 +137,8 @@
     <!-- Whether to turn on the notification light when the state of the front camera changes -->
     <java-symbol type="bool" name="config_popUpNotificationLight" />
 
+  <java-symbol type="bool" name="config_intrusiveBatteryLed" />
+  <java-symbol type="bool" name="config_multiColorBatteryLed" />
+  <java-symbol type="bool" name="config_ledCanPulse" />
+
 </resources>
