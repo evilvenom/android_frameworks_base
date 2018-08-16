@@ -5498,7 +5498,16 @@ public final class Settings {
         public static final String DISMISS_ALL_BUTTON = "dismiss_all_button";
 
         /**
-         * Settings to backup. This is here so that it's in the same place as the settings
+         * Whether to show the battery info on the lockscreen while charging
+         * @hide
+         */
+        public static final String LOCKSCREEN_BATTERY_INFO = "lockscreen_battery_info";
+        /** @hide */
+        private static final Validator LOCKSCREEN_BATTERY_INFO_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
+* Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
          * NOTE: Settings are backed up and restored in the order they appear
@@ -5562,7 +5571,9 @@ public final class Settings {
             DISPLAY_COLOR_MODE,
             ALARM_ALERT,
             NOTIFICATION_LIGHT_PULSE,
-        };
+            BACK_GESTURE_HEIGHT,
+            LOCKSCREEN_BATTERY_INFO,
+	};
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
@@ -5773,6 +5784,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(LIVE_DISPLAY_HINTED);
             PRIVATE_SETTINGS.add(BACK_GESTURE_HEIGHT);
             PRIVATE_SETTINGS.add(LOCKSCREEN_TRANSLUCENT_NOTIFICATIONS_BG_ENABLED);
+            PRIVATE_SETTINGS.add(LOCKSCREEN_BATTERY_INFO);
         }
 
         /**
@@ -5958,6 +5970,7 @@ public final class Settings {
             VALIDATORS.put(LIVE_DISPLAY_HINTED, LIVE_DISPLAY_HINTED_VALIDATOR);
             VALIDATORS.put(BACK_GESTURE_HEIGHT, BACK_GESTURE_HEIGHT_VALIDATOR);
             VALIDATORS.put(LOCKSCREEN_TRANSLUCENT_NOTIFICATIONS_BG_ENABLED, LOCKSCREEN_TRANSLUCENT_NOTIFICATIONS_BG_ENABLED_VALIDATOR);
+            VALIDATORS.put(LOCKSCREEN_BATTERY_INFO, LOCKSCREEN_BATTERY_INFO_VALIDATOR);
         }
 
         /**
