@@ -29,10 +29,15 @@ import com.android.systemui.qs.QSTileHost;
 import com.android.systemui.qs.external.CustomTile;
 import com.android.systemui.qs.tiles.AODTile;
 import com.android.systemui.qs.tiles.AirplaneModeTile;
+import com.android.systemui.qs.tiles.AlarmTile;
 import com.android.systemui.qs.tiles.AmbientDisplayTile;
 import com.android.systemui.qs.tiles.BatterySaverTile;
 import com.android.systemui.qs.tiles.BluetoothTile;
 import com.android.systemui.qs.tiles.CaffeineTile;
+import com.android.systemui.qs.tiles.CalcTile;
+import com.android.systemui.qs.tiles.CalendarTile;
+import com.android.systemui.qs.tiles.CallTile;
+import com.android.systemui.qs.tiles.CameraTile;
 import com.android.systemui.qs.tiles.CastTile;
 import com.android.systemui.qs.tiles.CellularTile;
 import com.android.systemui.qs.tiles.ColorInversionTile;
@@ -116,6 +121,11 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<CompassTile> mCompassTileProvider;
     private final Provider<RebootTile> mRebootTileProvider;
     private final Provider<DataSwitchTile> mDataSwitchTileProvider;
+    private final Provider<AlarmTile> mAlarmTileProvider;
+    private final Provider<CalcTile> mCalcTileProvider;
+    private final Provider<CalendarTile> mCalendarTileProvider;
+    private final Provider<CallTile> mCallTileProvider;
+    private final Provider<CameraTile> mCameraTileProvider;
 
     private QSTileHost mHost;
 
@@ -158,7 +168,12 @@ public class QSFactoryImpl implements QSFactory {
             Provider<FPSInfoTile> fpsInfoTileProvider,
             Provider<CompassTile> compassTileProvider,
             Provider<RebootTile> rebootTileProvider,
-            Provider<DataSwitchTile> dataSwitchTileProvider) {
+            Provider<DataSwitchTile> dataSwitchTileProvider,
+            Provider<AlarmTile> alarmTileProvider,
+            Provider<CalcTile> calcTileProvider,
+            Provider<CalendarTile> calendarTileProvider,
+            Provider<CameraTile> cameraTileProvider,
+            Provider<CallTile> callTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
         mCellularTileProvider = cellularTileProvider;
@@ -198,6 +213,11 @@ public class QSFactoryImpl implements QSFactory {
         mCompassTileProvider = compassTileProvider;
         mRebootTileProvider = rebootTileProvider;
         mDataSwitchTileProvider = dataSwitchTileProvider;
+        mAlarmTileProvider = alarmTileProvider;
+        mCalcTileProvider = calcTileProvider;
+        mCalendarTileProvider = calendarTileProvider;
+        mCallTileProvider = callTileProvider;
+        mCameraTileProvider = cameraTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -292,6 +312,16 @@ public class QSFactoryImpl implements QSFactory {
                 return mRebootTileProvider.get();
             case "dataswitch":
                 return mDataSwitchTileProvider.get();
+            case "alarm":
+                return mAlarmTileProvider.get();
+            case "calc":
+                return mCalcTileProvider.get();
+            case "calendar":
+                return mCalendarTileProvider.get();
+            case "camera":
+                return mCameraTileProvider.get();
+            case "call":
+                return mCallTileProvider.get();
         }
 
         // Intent tiles.
