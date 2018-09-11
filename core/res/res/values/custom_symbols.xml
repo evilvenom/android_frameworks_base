@@ -130,6 +130,9 @@
 
     <!-- Class name of screen off fod handler -->
     <java-symbol type="string" name="config_fodScreenOffHandlerClass" />
+	
+	<!-- Whether device supports an alt. ambient display -->
+    <java-symbol type="bool" name="config_alt_ambient_display"/>
 
     <!-- Component name of popup camera service -->
     <java-symbol type="string" name="config_popUpCameraServiceComponentName" />
