@@ -51,6 +51,7 @@ public class ImsUtImplBase {
             return ImsUtImplBase.this.queryCallForward(condition, number);
         }
 
+        /** @hide */
         @Override
         public int queryCallWaiting() throws RemoteException {
             return ImsUtImplBase.this.queryCallWaiting();
