@@ -186,6 +186,12 @@
     <string name="quick_settings_sound_ring">Ring</string>
     <string name="quick_settings_sound_vibrate">Vibrate</string>
     <string name="quick_settings_sound_dnd">Do not disturb</string>
+
+    <!-- Screenrecord Stuffs -->	
+    <string name="screenrecord_stopdot_label">Show stop dot</string>
+    
+    <!-- Power menu item for taking a screenshot [CHAR LIMIT=20]-->
+    <string name="global_action_screenshot_cust">"Screenshot/Rec"</string>
  
     <!-- Music tile -->
     <string name="quick_settings_music_label">Music</string>
