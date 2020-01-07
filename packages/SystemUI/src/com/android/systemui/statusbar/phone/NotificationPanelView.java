@@ -2262,6 +2262,7 @@ public class NotificationPanelView extends PanelView implements
         }
         mNotificationStackScroller.setAlpha(alpha);
         mStatusBar.setDismissAllVisible(true);
+        mStatusBar.updateBlurVisibility();
     }
 
     private float getFadeoutAlpha() {
