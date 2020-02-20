@@ -5505,6 +5505,15 @@ public final class Settings {
         /** @hide */
         private static final Validator LOCKSCREEN_BATTERY_INFO_VALIDATOR =
                 BOOLEAN_VALIDATOR;
+				
+		/**
+         * Whether to use new QS panel bg tint or not
+         * @hide
+         */
+        public static final String QS_PANEL_BG_USE_NEW_TINT = "qs_panel_bg_use_new_tint";
+
+        /** @hide */
+        private static final Validator QS_PANEL_BG_USE_NEW_TINT_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
 * Settings to backup. This is here so that it's in the same place as the settings
@@ -5573,7 +5582,8 @@ public final class Settings {
             NOTIFICATION_LIGHT_PULSE,
             BACK_GESTURE_HEIGHT,
             LOCKSCREEN_BATTERY_INFO,
-	};
+            QS_PANEL_BG_USE_NEW_TINT,
+        };
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
@@ -5785,6 +5795,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(BACK_GESTURE_HEIGHT);
             PRIVATE_SETTINGS.add(LOCKSCREEN_TRANSLUCENT_NOTIFICATIONS_BG_ENABLED);
             PRIVATE_SETTINGS.add(LOCKSCREEN_BATTERY_INFO);
+            PRIVATE_SETTINGS.add(QS_PANEL_BG_USE_NEW_TINT);
         }
 
         /**
@@ -5971,6 +5982,7 @@ public final class Settings {
             VALIDATORS.put(BACK_GESTURE_HEIGHT, BACK_GESTURE_HEIGHT_VALIDATOR);
             VALIDATORS.put(LOCKSCREEN_TRANSLUCENT_NOTIFICATIONS_BG_ENABLED, LOCKSCREEN_TRANSLUCENT_NOTIFICATIONS_BG_ENABLED_VALIDATOR);
             VALIDATORS.put(LOCKSCREEN_BATTERY_INFO, LOCKSCREEN_BATTERY_INFO_VALIDATOR);
+            VALIDATORS.put(QS_PANEL_BG_USE_NEW_TINT, QS_PANEL_BG_USE_NEW_TINT_VALIDATOR);
         }
 
         /**
