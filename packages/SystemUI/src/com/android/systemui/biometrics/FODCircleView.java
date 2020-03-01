@@ -97,8 +97,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
     private final ImageView mPressedView;
 
-    private FODAnimation mFODAnimation;
-
     private Timer mBurnInProtectionTimer;
 
     private FODAnimation mFODAnimation;
