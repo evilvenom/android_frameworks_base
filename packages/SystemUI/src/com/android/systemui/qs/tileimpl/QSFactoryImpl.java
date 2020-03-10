@@ -39,6 +39,7 @@ import com.android.systemui.qs.tiles.ColorInversionTile;
 import com.android.systemui.qs.tiles.DataSaverTile;
 import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
+import com.android.systemui.qs.tiles.FPSInfoTile;
 import com.android.systemui.qs.tiles.GamingModeTile;
 import com.android.systemui.qs.tiles.HeadsUpTile;
 import com.android.systemui.qs.tiles.HotspotTile;
@@ -108,6 +109,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<SoundSearchTile> mSoundSearchTileProvider;
     private final Provider<SoundTile> mSoundTileProvider;
     private final Provider<MusicTile> mMusicTileProvider;
+    private final Provider<FPSInfoTile> mFPSInfoTileProvider;
 
     private QSTileHost mHost;
 
@@ -146,7 +148,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<ScreenshotTile> screenshotTileProvider,
             Provider<SoundSearchTile> soundSearchTileProvider,
             Provider<SoundTile> soundTileProvider,
-            Provider<MusicTile> musicTileProvider) {
+            Provider<MusicTile> musicTileProvider,
+            Provider<FPSInfoTile> fpsInfoTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
         mCellularTileProvider = cellularTileProvider;
@@ -182,6 +185,7 @@ public class QSFactoryImpl implements QSFactory {
         mSoundSearchTileProvider = soundSearchTileProvider;
         mSoundTileProvider = soundTileProvider;
         mMusicTileProvider = musicTileProvider;
+        mFPSInfoTileProvider = fpsInfoTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -268,6 +272,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mSoundTileProvider.get();
             case "music":
                 return mMusicTileProvider.get();
+            case "fpsinfo":
+                return mFPSInfoTileProvider.get();
         }
 
         // Intent tiles.
