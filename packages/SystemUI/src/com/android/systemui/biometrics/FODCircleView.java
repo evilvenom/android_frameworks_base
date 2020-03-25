@@ -97,6 +97,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
     private final ImageView mPressedView;
 
+    private LockPatternUtils mLockPatternUtils;
+
     private Timer mBurnInProtectionTimer;
 
     private FODAnimation mFODAnimation;
@@ -143,6 +145,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         public void onKeyguardBouncerChanged(boolean isBouncer) {
             mIsBouncer = isBouncer;
             if (mUpdateMonitor.isFingerprintDetectionRunning()) {
+            if (mIsKeyguard && mUpdateMonitor.isFingerprintDetectionRunning()) {
                 if (isPinOrPattern(mUpdateMonitor.getCurrentUser()) || !isBouncer) {
                     show();
                 } else {
@@ -576,6 +579,20 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
         return false;
 
+    }
+
+    private boolean isPinOrPattern(int userId) {
+        int passwordQuality = mLockPatternUtils.getActivePasswordQuality(userId);
+        switch (passwordQuality) {
+            // PIN
+            case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC:
+            case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC_COMPLEX:
+            // Pattern
+            case DevicePolicyManager.PASSWORD_QUALITY_SOMETHING:
+                return true;
+        }
+
+        return false;
     }
 
     private class BurnInProtectionTask extends TimerTask {
