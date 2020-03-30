@@ -28,6 +28,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.UserManager;
 import android.provider.Settings;
+import com.android.systemui.settings.CurrentUserTracker;
 import android.provider.Settings.Secure;
 import android.text.TextUtils;
 import android.util.ArrayMap;
