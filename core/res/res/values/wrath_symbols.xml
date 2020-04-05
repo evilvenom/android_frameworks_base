@@ -235,6 +235,10 @@
     <!-- Whether device supports internal audio recording -->
     <java-symbol type="bool" name="config_hasInternalAudioRecordingSupport" />
 
+    <!-- Whether to use base rounded corner radius for window animations instead
+          of min between top and bottom radius-->
+    <java-symbol type="bool" name="config_useDefaultRoundedCornerRadius" />
+
 </resources>
 
 
