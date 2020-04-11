@@ -25,10 +25,9 @@ import com.android.systemui.qs.tileimpl.QSTileImpl;
 import com.android.systemui.R;
 
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
+import com.android.internal.util.wrath.PackageManagerUtils;
 
 import com.android.internal.custom.hardware.LineageHardwareManager;
-
-import com.android.internal.util.custom.PackageManagerUtils;
 
 import javax.inject.Inject;
 
