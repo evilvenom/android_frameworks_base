@@ -117,6 +117,7 @@ import com.android.systemui.statusbar.phone.ScrimController;
 import com.android.systemui.statusbar.phone.StatusBarWindowController;
 import com.android.systemui.statusbar.phone.UnlockMethodCache;
 import com.android.systemui.statusbar.policy.ConfigurationController;
+import com.android.systemui.statusbar.policy.KeyguardMonitor;
 import com.android.systemui.util.EmergencyDialerConstants;
 import com.android.systemui.util.leak.RotationUtils;
 import com.android.systemui.volume.SystemUIInterpolators.LogAccelerateInterpolator;
@@ -150,6 +151,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
     private final DevicePolicyManager mDevicePolicyManager;
     private final LockPatternUtils mLockPatternUtils;
     private final KeyguardManager mKeyguardManager;
+    private final KeyguardMonitor mKeyguardMonitor;
 
     private ArrayList<Action> mItems;
     private ActionsDialog mDialog;
@@ -180,6 +182,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
     private String[] mRestartMenuActions;
     private String[] mCurrentMenuActions;
     private boolean mIsRestartMenu;
+    private boolean mPowerMenuSecure;
 
     private BitSet mAirplaneModeBits;
     private final Hashtable<Integer, PhoneStateListener> mPhoneStateListeners =
@@ -198,6 +201,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                 Context.DEVICE_POLICY_SERVICE);
         mLockPatternUtils = new LockPatternUtils(mContext);
         mKeyguardManager = (KeyguardManager) mContext.getSystemService(Context.KEYGUARD_SERVICE);
+        mKeyguardMonitor = Dependency.get(KeyguardMonitor.class);
 
         // receive broadcasts
         IntentFilter filter = new IntentFilter();
@@ -619,6 +623,8 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         dialog.setOnDismissListener(this);
         dialog.setOnShowListener(this);
 
+        mPowerMenuSecure = Settings.Global.getInt(
+                        mContext.getContentResolver(), Settings.Global.LOCKSCREEN_POWERMENU_SECURE, 0) != 0;
         return dialog;
     }
 
@@ -647,6 +653,18 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         Dependency.get(ConfigurationController.class).removeCallback(this);
     }
 
+    private boolean rebootAction(boolean safeMode, String reason) {
+        if (mPowerMenuSecure && mKeyguardMonitor.isSecure() && mKeyguardMonitor.isShowing()) {
+            Dependency.get(ActivityStarter.class).postQSRunnableDismissingKeyguard(() -> {
+                mWindowManagerFuncs.reboot(safeMode, reason);
+            });
+            return true;
+        } else {
+            mWindowManagerFuncs.reboot(safeMode, reason);
+            return true;
+        }
+    }
+
     private final class PowerAction extends SinglePressAction implements LongPressAction {
         private PowerAction() {
             super(R.drawable.ic_lock_power_off,
@@ -657,8 +675,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         public boolean onLongPress() {
             UserManager um = (UserManager) mContext.getSystemService(Context.USER_SERVICE);
             if (!um.hasUserRestriction(UserManager.DISALLOW_SAFE_BOOT)) {
-                mWindowManagerFuncs.reboot(true, null);
-                return true;
+                return rebootAction(true, null);
             }
             return false;
         }
@@ -676,7 +693,13 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         @Override
         public void onPress() {
             // shutdown by making sure radio and power are handled accordingly.
-            mWindowManagerFuncs.shutdown();
+            if (mPowerMenuSecure && mKeyguardMonitor.isSecure() && mKeyguardMonitor.isShowing()) {
+                Dependency.get(ActivityStarter.class).postQSRunnableDismissingKeyguard(() -> {
+                    mWindowManagerFuncs.shutdown();
+                });
+            } else {
+                mWindowManagerFuncs.shutdown();
+            }
         }
     }
 
@@ -766,8 +789,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         public boolean onLongPress() {
             UserManager um = (UserManager) mContext.getSystemService(Context.USER_SERVICE);
             if (!um.hasUserRestriction(UserManager.DISALLOW_SAFE_BOOT)) {
-                mWindowManagerFuncs.reboot(true, null);
-                return true;
+                return rebootAction(true, null);
             }
             return false;
         }
@@ -798,7 +820,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             } else {
                 mHandler.sendEmptyMessage(MESSAGE_DISMISS);
                 if (mIsRestartMenu || !isAdvancedRestartPossible()) {
-                    mWindowManagerFuncs.reboot(false, null);
+                    rebootAction(false, null);
                 }
             }
         }
@@ -822,7 +844,8 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
 
         @Override
         public void onPress() {
-            mWindowManagerFuncs.reboot(false, PowerManager.REBOOT_RECOVERY);
+            rebootAction(false, PowerManager.REBOOT_RECOVERY);
+
         }
     }
 
@@ -844,7 +867,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
 
         @Override
         public void onPress() {
-            mWindowManagerFuncs.reboot(false, PowerManager.REBOOT_BOOTLOADER);
+            rebootAction(false, PowerManager.REBOOT_BOOTLOADER);
         }
     }
 
@@ -866,7 +889,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
 
         @Override
         public void onPress() {
-            mWindowManagerFuncs.reboot(false, PowerManager.REBOOT_DOWNLOAD);
+            rebootAction(false, PowerManager.REBOOT_DOWNLOAD);
         }
     }
 
@@ -888,7 +911,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
 
         @Override
         public void onPress() {
-            mWindowManagerFuncs.reboot(false, PowerManager.REBOOT_FASTBOOT);
+            rebootAction(false, PowerManager.REBOOT_FASTBOOT);
         }
     }
 
@@ -910,7 +933,13 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
 
         @Override
         public void onPress() {
-            restartSystemUI();
+            if (mPowerMenuSecure && mKeyguardMonitor.isSecure() && mKeyguardMonitor.isShowing()) {
+                Dependency.get(ActivityStarter.class).postQSRunnableDismissingKeyguard(() -> {
+                    Process.killProcess(Process.myPid());
+                });
+            } else {
+                Process.killProcess(Process.myPid());
+            }
         }
     }
 
@@ -2177,10 +2206,6 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             public boolean locked;
             public int rotation;
         }
-    }
-
-    public static void restartSystemUI() {
-        Process.killProcess(Process.myPid());
     }
 
     /**
