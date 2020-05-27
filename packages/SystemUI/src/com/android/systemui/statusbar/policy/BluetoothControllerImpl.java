@@ -240,7 +240,7 @@ public class BluetoothControllerImpl implements BluetoothController, BluetoothCa
             if (maxDeviceState > state) {
                 state = maxDeviceState;
             }
-            if (state == BluetoothProfile.STATE_CONNECTED) {
+            if (maxDeviceState == BluetoothProfile.STATE_CONNECTED) {
                 mConnectedDevices.add(device);
             }
         }
