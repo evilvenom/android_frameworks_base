@@ -33,7 +33,6 @@ import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.hardware.biometrics.BiometricSourceType;
-import android.hardware.fingerprint.FingerprintManager;
 import android.os.Handler;
 import android.os.UserHandle;
 import android.os.Looper;
@@ -63,8 +62,6 @@ import vendor.lineage.biometrics.fingerprint.inscreen.V1_0.IFingerprintInscreenC
 import java.util.NoSuchElementException;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import com.android.internal.util.custom.fod.FodScreenOffHandler;
 
 public class FODCircleView extends ImageView implements ConfigurationListener {
     private final int mPositionX;
@@ -102,10 +99,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
     private Timer mBurnInProtectionTimer;
 
-    private FODAnimation mFODAnimation;
-
-    private FodScreenOffHandler mFodScreenOffHandler;
-
     private IFingerprintInscreenCallback mFingerprintInscreenCallback =
             new IFingerprintInscreenCallback.Stub() {
         @Override
@@ -119,14 +112,12 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         }
     };
 
-    private FingerprintManager mFingerprintManager;
     private KeyguardUpdateMonitor mUpdateMonitor;
 
     private KeyguardUpdateMonitorCallback mMonitorCallback = new KeyguardUpdateMonitorCallback() {
         @Override
         public void onDreamingStateChanged(boolean dreaming) {
             mIsDreaming = dreaming;
-            dispatchFodDreamingStateChanged();
             updateAlpha();
 
             if (dreaming) {
@@ -163,22 +154,12 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         @Override
         public void onScreenTurnedOff() {
             hide();
-            dispatchFodScreenStateChanged(false);
         }
 
         @Override
         public void onScreenTurnedOn() {
             if (mUpdateMonitor.isFingerprintDetectionRunning()) {
                 show();
-            }
-            dispatchFodScreenStateChanged(true);
-        }
-
-        @Override
-        public void onBiometricRunningStateChanged(boolean running,
-            BiometricSourceType biometricSourceType) {
-            if (biometricSourceType == BiometricSourceType.FINGERPRINT){
-                dispatchFodFingerprintRunningStateChanged(running);
             }
         }
 
@@ -199,34 +180,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
             }
         }
     };
-
-    private void dispatchFodScreenStateChanged(boolean interactive){
-        dispatchFodFingerprintHasEnrolledFinger();
-        if (mFodScreenOffHandler != null){
-            mFodScreenOffHandler.onScreenStateChanged(interactive);
-        }
-    }
-
-    private void dispatchFodFingerprintRunningStateChanged(boolean running){
-        if (mFodScreenOffHandler != null){
-            mFodScreenOffHandler.onFingerprintRunningStateChanged(running);
-        }
-    }
-
-    private void dispatchFodDreamingStateChanged(){
-        if (mFodScreenOffHandler != null){
-            mFodScreenOffHandler.onDreamingStateChanged(mIsDreaming);
-        }
-    }
-
-    private void dispatchFodFingerprintHasEnrolledFinger(){
-        if (mFodScreenOffHandler != null &&
-                mFingerprintManager != null && 
-                mFingerprintManager.isHardwareDetected()) {
-            boolean enrolled = mFingerprintManager.hasEnrolledFingerprints(UserHandle.myUserId());
-            mFodScreenOffHandler.hasEnrolledFingerprints(enrolled);
-        }
-    }
 
     private boolean canUnlockWithFp() {
         int currentUser = ActivityManager.getCurrentUser();
@@ -251,11 +204,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
     private boolean mCutoutMasked;
     private int mStatusbarHeight;
 
-    public FODCircleView(Context context, FodScreenOffHandler fodScreenOffHandler) {
+    public FODCircleView(Context context) {
         super(context);
-
-        mFingerprintManager = (FingerprintManager) context.getSystemService(Context.FINGERPRINT_SERVICE);
-        mFodScreenOffHandler = fodScreenOffHandler;
 
         setScaleType(ScaleType.CENTER);
 
@@ -619,9 +569,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
         return false;
 
-    private void updateSettings() {
-        mIsRecognizingAnimEnabled = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.FOD_RECOGNIZING_ANIMATION, 1) != 0;
     }
 
     private class BurnInProtectionTask extends TimerTask {
