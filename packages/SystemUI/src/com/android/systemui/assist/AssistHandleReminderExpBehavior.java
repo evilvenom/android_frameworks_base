@@ -236,7 +236,6 @@ final class AssistHandleReminderExpBehavior implements BehaviorController {
         mLastLearningTimestamp = mClock.currentTimeMillis();
 
         callbackForCurrentState(/* justUnlocked = */ false);
-
     }
 
     @Override
@@ -405,10 +404,7 @@ final class AssistHandleReminderExpBehavior implements BehaviorController {
         if (!isFullyAwake() || mIsNavBarHidden || isSuppressed()) {
             mAssistHandleCallbacks.hide();
         } else if (mOnLockscreen) {
-                mAssistHandleCallbacks.hide();
-            }else{
-                mAssistHandleCallbacks.showAndStay();
-            }
+            mAssistHandleCallbacks.showAndStay();
         } else if (mIsLauncherShowing) {
             mAssistHandleCallbacks.showAndGo();
         } else if (mConsecutiveTaskSwitches == 1) {
