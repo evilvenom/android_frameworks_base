@@ -7430,8 +7430,8 @@ message MetricsEvent {
     // Add new aosp constants above this line.
     // END OF AOSP CONSTANTS
 
-    // CustomSettings constant
-    CUSTOM_SETTINGS = 1999;
+    // WrathSettings constant
+    WRATH_SETTINGS = 1999;
 
   }
 }

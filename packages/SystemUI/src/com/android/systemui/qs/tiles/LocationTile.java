@@ -120,7 +120,7 @@ public class LocationTile extends QSTileImpl<BooleanState> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.CUSTOM_SETTINGS;
+        return MetricsEvent.WRATH_SETTINGS;
     }
 
     @Override
