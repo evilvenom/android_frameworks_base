@@ -73,4 +73,5 @@
     <dimen name="horizontal_max_swift">3.0dp</dimen>
     <dimen name="vertical_max_swift">1.0dp</dimen>
 
+    <dimen name="volume_dialog_panel_land_margin">68dp</dimen>
 </resources>
