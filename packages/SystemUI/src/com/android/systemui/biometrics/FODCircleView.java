@@ -32,8 +32,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
-import android.hardware.biometrics.BiometricSourceType;
 import android.graphics.drawable.AnimationDrawable;
+import android.hardware.biometrics.BiometricSourceType;
 import android.os.Handler;
 import android.os.UserHandle;
 import android.os.Looper;
@@ -145,7 +145,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         public void onKeyguardBouncerChanged(boolean isBouncer) {
             mIsBouncer = isBouncer;
             if (mUpdateMonitor.isFingerprintDetectionRunning()) {
-            if (mIsKeyguard && mUpdateMonitor.isFingerprintDetectionRunning()) {
                 if (isPinOrPattern(mUpdateMonitor.getCurrentUser()) || !isBouncer) {
                     show();
                 } else {
@@ -174,6 +173,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
             if (biometricSourceType == BiometricSourceType.FINGERPRINT &&
                     msgId == -1){ // Auth error
                 hideCircle();
+                mHandler.post(() -> mFODAnimation.hideFODanimation());
             }
         }
 
@@ -564,21 +564,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
                 mWindowManager.removeView(mPressedView);
             }
         }
-    }
-
-    private boolean isPinOrPattern(int userId) {
-        int passwordQuality = mLockPatternUtils.getActivePasswordQuality(userId);
-        switch (passwordQuality) {
-            // PIN
-            case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC:
-            case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC_COMPLEX:
-            // Pattern
-            case DevicePolicyManager.PASSWORD_QUALITY_SOMETHING:
-                return true;
-        }
-
-        return false;
-
     }
 
     private boolean isPinOrPattern(int userId) {
