@@ -132,9 +132,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         public void onKeyguardVisibilityChanged(boolean showing) {
             mIsKeyguard = showing;
             updatePosition();
-            if (mFODAnimation != null) {
-                mFODAnimation.setAnimationKeyguard(showing);
-            }
         }
 
         @Override
