@@ -349,7 +349,7 @@ public class NetworkTraffic extends TextView {
         updateViewState();
     }
 
-    protected void updateViewState() {
+    private void updateViewState() {
         mTrafficHandler.removeMessages(MESSAGE_TYPE_UPDATE_VIEW);
         mTrafficHandler.sendEmptyMessage(MESSAGE_TYPE_UPDATE_VIEW);
     }
