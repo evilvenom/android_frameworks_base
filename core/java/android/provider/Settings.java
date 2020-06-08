@@ -5394,17 +5394,6 @@ public final class Settings {
                 ANY_INTEGER_VALIDATOR;
 
         /**
-         * Whether to have translucent background on lockscreen notifications
-         * @hide
-         */
-        public static final String LOCKSCREEN_TRANSLUCENT_NOTIFICATIONS_BG_ENABLED
-                = "lockscreen_translucent_notifications_bg_enabled";
-
-        /** @hide */
-        private static final Validator LOCKSCREEN_TRANSLUCENT_NOTIFICATIONS_BG_ENABLED_VALIDATOR =
-                BOOLEAN_VALIDATOR;
-
-        /**
          * DismissAll Button
          * @hide
          */

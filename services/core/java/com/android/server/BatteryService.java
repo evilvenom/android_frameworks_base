@@ -354,10 +354,6 @@ public final class BatteryService extends SystemService {
             ContentResolver resolver = mContext.getContentResolver();
             Resources res = mContext.getResources();
 
-            mBatteryLightEnabled = Settings.Global.getInt(resolver,
-                    Settings.Global.BATTERY_LIGHT_ENABLED, mContext.getResources().getBoolean(
-                        com.android.internal.R.bool.config_intrusiveBatteryLed) ? 1 : 0) == 1;
-
             // Battery light enabled
             mLightEnabled = Settings.System.getInt(resolver,
                     Settings.System.BATTERY_LIGHT_ENABLED, 1) != 0;
