@@ -54,5 +54,4 @@
         systemui:textAppearance="@style/TextAppearance.QS.Status"
         android:paddingEnd="2dp" />
 
-    </LinearLayout>
 </LinearLayout>
