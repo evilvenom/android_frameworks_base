@@ -43,8 +43,6 @@ import com.android.systemui.shared.system.QuickStepContract;
 import com.android.systemui.shared.system.TaskStackChangeListener;
 import com.android.systemui.statusbar.StatusBarState;
 
-import com.android.systemui.R;
-
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -186,7 +184,6 @@ final class AssistHandleReminderExpBehavior implements BehaviorController {
     @Nullable private AssistHandleCallbacks mAssistHandleCallbacks;
     @Nullable private ComponentName mDefaultHome;
 
-    private boolean mDisableAssistHintOnLockscreen;
     private boolean mHasFOD;
 
     @Inject
@@ -242,7 +239,6 @@ final class AssistHandleReminderExpBehavior implements BehaviorController {
 
         callbackForCurrentState(/* justUnlocked = */ false);
 
-        mDisableAssistHintOnLockscreen = context.getResources().getBoolean(R.bool.config_disableAssistHintOnLockscreen);
         mHasFOD = context.getResources().getBoolean(com.android.internal.R.bool.config_supportsInDisplayFingerprint);
     }
 
@@ -412,7 +408,6 @@ final class AssistHandleReminderExpBehavior implements BehaviorController {
         if (!isFullyAwake() || mIsNavBarHidden || isSuppressed()) {
             mAssistHandleCallbacks.hide();
         } else if (mOnLockscreen) {
-            if (mDisableAssistHintOnLockscreen){
             if (mHasFOD){
                 mAssistHandleCallbacks.hide();
             }else{
