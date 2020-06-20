@@ -5805,8 +5805,8 @@ public final class Settings {
          * @hide
          */
         public static final String SMART_CHARGING_RESUME_LEVEL = "smart_charging_resume_level";
-		
-		/**
+
+        /**
          * Whether to use slim recents
          * @hide
          */
@@ -6184,22 +6184,10 @@ public final class Settings {
                 ANY_STRING_VALIDATOR;
 
         /**
-         * FOD icon picker
-         * @hide
-         */
-        public static final String FOD_ICON = "fod_icon";
-
-        /**
          * Whether or not to vibrate when a touchscreen gesture is detected
          * @hide
          */
         public static final String TOUCHSCREEN_GESTURE_HAPTIC_FEEDBACK = "touchscreen_gesture_haptic_feedback";
-
-        /**
-         * FOD recognizing animation
-         * @hide
-         */
-        public static final String FOD_RECOGNIZING_ANIMATION = "fod_recognizing_animation";
 
         /**
          * Sensor block per-package
