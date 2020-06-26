@@ -6251,6 +6251,12 @@ public final class Settings {
          */
         public static final String SENSOR_BLOCK = "sensor_block";
 
+          /**
+           * Whether show/hide things in volume panel
+           * @hide
+           */
+          public static final String HIDE_THINGS_VOLUMEPANEL = "hide_things_volumepanel";
+
         /**
          * Settings dashboard icon style
          * @hide
