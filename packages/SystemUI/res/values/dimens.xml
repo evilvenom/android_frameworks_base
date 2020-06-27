@@ -721,7 +721,7 @@
     <!-- The top padding of the clear all button -->
     <dimen name="clear_all_padding_top">12dp</dimen>
 
-    <dimen name="notification_section_header_height">32dp</dimen>
+    <dimen name="notification_section_header_height">40dp</dimen>
     <dimen name="notification_section_header_padding_left">16dp</dimen>
 
     <!-- Largest size an avatar might need to be drawn in the user picker, status bar, or
@@ -1202,3 +1202,4 @@
     <dimen name="config_rounded_mask_size_top">@*android:dimen/rounded_corner_radius_top</dimen>
     <dimen name="config_rounded_mask_size_bottom">@*android:dimen/rounded_corner_radius_top</dimen>
 </resources>
+
