@@ -156,8 +156,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<SoundTile> soundTileProvider,
             Provider<MusicTile> musicTileProvider,
             Provider<FPSInfoTile> fpsInfoTileProvider,
-            Provider<CompassTile> compassTileProvider) {
-            Provider<RebootTile> rebootTileProvider) {
+            Provider<CompassTile> compassTileProvider,
+            Provider<RebootTile> rebootTileProvider,
             Provider<DataSwitchTile> dataSwitchTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
