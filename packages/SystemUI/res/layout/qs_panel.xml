@@ -41,6 +41,20 @@
         android:accessibilityTraversalBefore="@android:id/edit"
     />
 
+    <!-- Black part behind the status bar -->
+    <LinearLayout
+        android:id="@+id/quick_settings_status_bar_background"
+        android:layout_width="match_parent"
+        android:layout_height="@*android:dimen/quick_qs_offset_height"
+        android:background="#ff000000" >
+
+        <ImageView android:id="@+id/qs_header_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:visibility="gone" />
+    </LinearLayout>
+
     <include layout="@layout/quick_status_bar_expanded_header" />
 
     <include layout="@layout/qs_footer_impl" />
