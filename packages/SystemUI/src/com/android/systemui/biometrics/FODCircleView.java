@@ -78,9 +78,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
     private int mDreamingOffsetX;
     private int mDreamingOffsetY;
-
-    private int mColor;
-    private int mColorBackground;
+    private int mCurrentBrightness;
 
     private boolean mIsBouncer;
     private boolean mIsDreaming;
@@ -201,8 +199,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
     public FODCircleView(Context context) {
         super(context);
 
-        setScaleType(ScaleType.CENTER);
-
         IFingerprintInscreen daemon = getFingerprintInScreenDaemon();
         if (daemon == null) {
             throw new RuntimeException("Unable to get IFingerprintInscreen");
@@ -219,14 +215,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
         Resources res = context.getResources();
 
-        mColor = res.getColor(R.color.config_fodColor);
-
-        mPaintFingerprint.setColor(mColor);
         mPaintFingerprint.setAntiAlias(true);
-
-        mColorBackground = res.getColor(R.color.config_fodColorBackground);
-        mPaintFingerprintBackground.setColor(mColorBackground);
-        mPaintFingerprintBackground.setAntiAlias(true);
+        mPaintFingerprint.setColor(res.getColor(R.color.config_fodColor));
 
         mWindowManager = context.getSystemService(WindowManager.class);
 
@@ -281,10 +271,11 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (!mIsCircleShowing) {
-            canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprintBackground);
-        }
         super.onDraw(canvas);
+
+        if (mIsCircleShowing) {
+            canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprint);
+        }
     }
 
     @Override
@@ -375,12 +366,14 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
         setImageDrawable(null);
         mPressedView.setImageResource(R.drawable.fod_icon_pressed);
+        setImageResource(R.drawable.fod_icon_pressed);
         invalidate();
     }
 
     public void hideCircle() {
         mIsCircleShowing = false;
 
+        setFODIcon();
         setImageResource(R.drawable.fod_icon_default);
         invalidate();
 
