@@ -725,14 +725,5 @@
                 <action android:name="com.android.intent.action.SHOW_KEYBOARD_SHORTCUTS" />
             </intent-filter>
         </receiver>
-
-        <!-- FPS Info -->
-        <service android:name=".FPSInfoService"
-                android:exported="false" />
-        <receiver android:name=".BootReceiver" androidprv:systemUserOnly="true">
-            <intent-filter android:priority="1000">
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
     </application>
 </manifest>

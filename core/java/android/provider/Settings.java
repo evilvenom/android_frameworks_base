@@ -16118,13 +16118,6 @@ public final class Settings {
         /**
          * @hide
          */
-        public static final String SHOW_FPS_OVERLAY = "show_fps_overlay";
-
-        private static final Validator SHOW_FPS_OVERLAY_VALIDATOR = BOOLEAN_VALIDATOR;
-
-        /**
-         * @hide
-         */
         public static final String DEVICE_IDLE_CONSTANTS_USER = "device_idle_constants_user";
 
         /**
@@ -16177,7 +16170,6 @@ public final class Settings {
             CHARGING_VIBRATION_ENABLED,
             AWARE_ALLOWED,
             NOTIFICATION_BUBBLES,
-            SHOW_FPS_OVERLAY,
         };
 
         /**
@@ -16247,7 +16239,6 @@ public final class Settings {
             VALIDATORS.put(POWER_BUTTON_VERY_LONG_PRESS, POWER_BUTTON_VERY_LONG_PRESS_VALIDATOR);
             VALIDATORS.put(NOTIFICATION_BUBBLES, NOTIFICATION_BUBBLES_VALIDATOR);
             VALIDATORS.put(BATTERY_LIGHT_ENABLED, BATTERY_LIGHT_ENABLED_VALIDATOR);
-            VALIDATORS.put(SHOW_FPS_OVERLAY, SHOW_FPS_OVERLAY_VALIDATOR);
         }
 
         /**
